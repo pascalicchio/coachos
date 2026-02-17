@@ -10,28 +10,16 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
-            padding: 20px;
         }
         .container { 
-            max-width: 520px; 
-            width: 100%;
-            background: rgba(255,255,255,0.08);
-            padding: 50px 40px;
-            border-radius: 24px;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
+            max-width: 680px; 
+            margin: 0 auto;
+            padding: 40px 20px;
         }
-        .logo { font-size: 28px; font-weight: 800; margin-bottom: 25px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .logo { font-size: 28px; font-weight: 800; margin-bottom: 20px; }
         .logo span { color: #ff6b35; }
-        h1 { font-size: 36px; margin-bottom: 10px; font-weight: 800; }
-        h1 span { color: #ff6b35; }
-        p { color: #999; margin-bottom: 30px; font-size: 16px; line-height: 1.6; }
-        
         .badge {
             display: inline-block;
             background: rgba(255,107,53,0.2);
@@ -40,66 +28,56 @@
             border-radius: 20px;
             font-size: 14px;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+        h1 { font-size: 38px; margin-bottom: 10px; font-weight: 800; }
+        h1 span { color: #ff6b35; }
+        p { color: #999; font-size: 17px; line-height: 1.6; margin-bottom: 30px; }
         
         .offer {
-            background: rgba(255,107,53,0.1);
-            border: 1px solid rgba(255,107,53,0.3);
-            padding: 20px;
-            border-radius: 12px;
+            background: rgba(255,107,53,0.15);
+            border: 1px solid rgba(255,107,53,0.4);
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
             margin-bottom: 30px;
         }
         
-        .offer strong { color: #ff6b35; font-size: 18px; }
+        .offer strong { color: #ff6b35; font-size: 22px; }
         
-        .form-link {
-            display: inline-block;
-            padding: 18px 40px;
-            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-            color: white;
-            text-decoration: none;
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
             border-radius: 12px;
-            font-size: 18px;
-            font-weight: 700;
-            transition: all 0.3s;
+            background: white;
         }
         
-        .form-link:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 10px 40px rgba(255,107,53,0.4);
-        }
-        
-        .note {
+        .back-link {
+            display: block;
+            text-align: center;
             margin-top: 20px;
-            font-size: 13px;
             color: #666;
+            text-decoration: none;
         }
-        
-        .success { display: none; text-align: center; padding: 20px; }
-        .success h3 { font-size: 28px; color: #4ade80; margin-bottom: 10px; }
+        .back-link:hover { color: #ff6b35; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="logo">Coach<span>OS</span></div>
-        
-        <span class="badge">🚀 Early Access</span>
-        
-        <h1>Join the <span>Waitlist</span></h1>
-        
-        <div class="offer">
-            <p>Early subscribers get<br><strong>50% OFF for life!</strong></p>
+        <div class="header">
+            <div class="logo">Coach<span>OS</span></div>
+            <span class="badge">🚀 Early Access</span>
+            <h1>Join the <span>Waitlist</span></h1>
+            
+            <div class="offer">
+                <p>Early subscribers get<br><strong>50% OFF for life!</strong></p>
+            </div>
         </div>
         
-        <p>Be the first to know when CoachOS launches.<br>The simplest gym management tool ever built.</p>
+        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScjl9s8f2X6NvnQXnQbIb7XhNSOZFftJdhHXLeO3yUJ2jxx1g/viewform?embedded=true"></iframe>
         
-        <!-- REPLACE THE HREF BELOW WITH YOUR GOOGLE FORM LINK -->
-        <a href="YOUR_GOOGLE_FORM_HERE" target="_blank" class="form-link">
-            Join the Waitlist →
-        </a>
-        
-        <p class="note">Takes 30 seconds. No spam, ever.</p>
+        <a href="/" class="back-link">← Back to Home</a>
     </div>
 </body>
 </html>
