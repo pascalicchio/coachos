@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoachOS - The Simplest Gym Management</title>
+    <meta name="description" content="The simplest gym management software. No learning curve. Just manage your coaches, schedules, and payments in one place.">
+    
+    <style>
+        :root {
+            --primary: #ff6b35;
+            --dark: #1a1a2e;
+            --light: #f7f7f7;
+            --gray: #666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--light);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray);
+            margin-left: 30px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 60px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .hero h1 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 22px;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .hero .btn {
+            padding: 16px 40px;
+            font-size: 18px;
+        }
+        
+        .features {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: var(--gray);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            padding: 40px;
+            border-radius: 16px;
+            background: var(--light);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        .pricing {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pricing-card.popular {
+            border: 3px solid var(--primary);
+            position: relative;
+        }
+        
+        .pricing-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .price {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--dark);
+            margin: 20px 0;
+        }
+        
+        .price span {
+            font-size: 18px;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        
+        .cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8e53 100%);
+            text-align: center;
+            color: white;
+        }
+        
+        .cta h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 20px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        .cta .btn {
+            background: var(--dark);
+            color: white;
+        }
+        
+        footer {
+            padding: 40px 0;
+            background: var(--dark);
+            color: #666;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Coach<span>OS</span></div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#login">Login</a>
+                    <a href="#signup" class="btn">Start Free Trial</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>The Simplest Gym<br><span>Management. Ever.</span></h1>
+            <p>No learning curve. No complicated features. Just manage your coaches, schedules, and payments in one place.</p>
+            <div class="hero-btns">
+                <a href="#signup" class="btn">Start 14-Day Free Trial</a>
+                <a href="#demo" class="btn btn-outline" style="color: white; border-color: white;">Watch Demo</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Everything You Need</h2>
+                <p>Built for gym owners who just want to get things done.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Create weekly schedules in minutes. Drag, drop, done. Your coaches always know when to show up.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Easy Payments</h3>
+                    <p>Track coach payments automatically. No more spreadsheets. Know exactly what everyone owes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🥋</div>
+                    <h3>Private Classes</h3>
+                    <p>Book and track private lessons. Payouts calculated automatically based on your rates.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Lead Management</h3>
+                    <p>Track prospects and let them book trial classes themselves. Never miss a lead again.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Works on Any Device</h3>
+                    <p>Access from your phone, tablet, or computer. Your whole team can use it.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Set It and Forget</h3>
+                    <p>Automated reminders, confirmations, and follow-ups. Spend less time on admin and more on teaching.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Simple Pricing</h2>
+                <p>14-day free trial on all plans. No credit card required.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">$29<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>1 Location</li>
+                        <li>Up to 5 Coaches</li>
+                        <li>Schedule Management</li>
+                        <li>Basic Reports</li>
+                        <li>Email Support</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-outline">Start Free</a>
+                </div>
+                <div class="pricing-card popular">
+                    <h3>Pro</h3>
+                    <div class="price">$59<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>3 Locations</li>
+                        <li>Up to 15 Coaches</li>
+                        <li>Payment Tracking</li>
+                        <li>Private Classes</li>
+                        <li>Inventory Tracking</li>
+                        <li>Priority Support</li>
+                    </ul>
+                    <a href="#signup" class="btn">Start Free</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Business</h3>
+                    <div class="price">$99<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>Unlimited Locations</li>
+                        <li>Unlimited Coaches</li>
+                        <li>Lead Management</li>
+                        <li>Trial Booking System</li>
+                        <li>Automated Reminders</li>
+                        <li>Dedicated Support</li>
+                    </ul>
+                    <a href="#signup" class="btn btn-outline">Start Free</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Simplify?</h2>
+            <p>Join hundreds of gym owners who switched to CoachOS.</p>
+            <a href="#signup" class="btn">Start Your Free Trial</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 CoachOS. Built for gym owners, by gym owners.</p>
+        </div>
+    </footer>
+</body>
+</html>

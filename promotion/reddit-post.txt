@@ -1,0 +1,15 @@
+Title: Simple gym management tool for gym owners - no learning curve
+
+Body:
+I've been running 2 BJJ gyms and built my own software because nothing on the market was simple enough.
+
+If you're a gym owner who just wants to:
+- Know who's teaching when
+- Track what you owe coaches
+- Book trial classes without the back-and-forth
+
+This might be for you. Just launched the waiting list.
+
+Curious - what's the #1 thing you hate about your current gym software?
+
+[link]
