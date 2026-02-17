@@ -29,12 +29,6 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Generate app key
-RUN php artisan key:generate --force
-
-# Run migrations
-RUN php artisan migrate --force
-
 # Give permission to storage
 RUN chown -R www-data:www-data /var/www/storage \
     && chmod -R 755 /var/www/storage \
