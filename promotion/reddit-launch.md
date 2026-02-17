@@ -24,8 +24,8 @@ No spreadsheets. No complicated setup.
 
 **The plan:**
 - Free 14-day trial
-- $29/mo for small gyms
-- $59/mo for multiple locations
+- $19/mo for small gyms
+- $39/mo for multiple locations
 
 Would love some feedback from other gym owners. Happy to answer questions!
 
