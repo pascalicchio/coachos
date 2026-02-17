@@ -14,86 +14,92 @@
             align-items: center;
             justify-content: center;
             color: white;
+            padding: 20px;
         }
         .container { 
-            max-width: 500px; 
-            padding: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
+            max-width: 520px; 
+            width: 100%;
+            background: rgba(255,255,255,0.08);
+            padding: 50px 40px;
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
         }
-        h1 { font-size: 36px; margin-bottom: 10px; }
+        .logo { font-size: 28px; font-weight: 800; margin-bottom: 25px; }
+        .logo span { color: #ff6b35; }
+        h1 { font-size: 36px; margin-bottom: 10px; font-weight: 800; }
         h1 span { color: #ff6b35; }
-        p { color: #aaa; margin-bottom: 30px; font-size: 18px; }
-        input { 
-            width: 100%; 
-            padding: 15px; 
-            margin-bottom: 15px; 
-            border-radius: 10px;
-            border: none;
-            font-size: 16px;
-        }
-        input:focus { outline: 2px solid #ff6b35; }
-        button { 
-            width: 100%; 
-            padding: 15px; 
-            background: #ff6b35; 
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
+        p { color: #999; margin-bottom: 30px; font-size: 16px; line-height: 1.6; }
+        
+        .badge {
+            display: inline-block;
+            background: rgba(255,107,53,0.2);
+            color: #ff6b35;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
             font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
+            margin-bottom: 20px;
         }
-        button:hover { transform: scale(1.02); }
-        .success { 
-            display: none; 
-            text-align: center; 
+        
+        .offer {
+            background: rgba(255,107,53,0.1);
+            border: 1px solid rgba(255,107,53,0.3);
             padding: 20px;
-            background: rgba(0,255,0,0.2);
-            border-radius: 10px;
-            margin-top: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
         }
-        .success h3 { color: #4ade80; }
+        
+        .offer strong { color: #ff6b35; font-size: 18px; }
+        
+        .form-link {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .form-link:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255,107,53,0.4);
+        }
+        
+        .note {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .success { display: none; text-align: center; padding: 20px; }
+        .success h3 { font-size: 28px; color: #4ade80; margin-bottom: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="logo">Coach<span>OS</span></div>
+        
+        <span class="badge">🚀 Early Access</span>
+        
         <h1>Join the <span>Waitlist</span></h1>
-        <p>Be the first to know when CoachOS launches. Early subscribers get 50% off for life.</p>
         
-        <form id="form">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Email Address" required>
-            <input type="text" id="gym" placeholder="Gym Name (optional)">
-            <button type="submit">Join the Waitlist</button>
-        </form>
-        
-        <div class="success" id="success">
-            <h3>🎉 You're on the list!</h3>
-            <p>We'll email you when we launch.</p>
+        <div class="offer">
+            <p>Early subscribers get<br><strong>50% OFF for life!</strong></p>
         </div>
+        
+        <p>Be the first to know when CoachOS launches.<br>The simplest gym management tool ever built.</p>
+        
+        <!-- REPLACE THE HREF BELOW WITH YOUR GOOGLE FORM LINK -->
+        <a href="YOUR_GOOGLE_FORM_HERE" target="_blank" class="form-link">
+            Join the Waitlist →
+        </a>
+        
+        <p class="note">Takes 30 seconds. No spam, ever.</p>
     </div>
-    
-    <script>
-        document.getElementById('form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const data = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                gym: document.getElementById('gym').value,
-                date: new Date().toISOString()
-            };
-            
-            // Save to localStorage (demo)
-            const leads = JSON.parse(localStorage.getItem('coachos_leads') || '[]');
-            leads.push(data);
-            localStorage.setItem('coachos_leads', JSON.stringify(leads));
-            
-            document.getElementById('form').style.display = 'none';
-            document.getElementById('success').style.display = 'block';
-        });
-    </script>
 </body>
 </html>
