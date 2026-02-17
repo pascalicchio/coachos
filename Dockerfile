@@ -29,6 +29,9 @@ COPY . .
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Run migrations and seed
+RUN php artisan migrate --force && php artisan db:seed --force
+
 # Give permission to storage
 RUN chown -R www-data:www-data /var/www/storage \
     && chmod -R 755 /var/www/storage \
