@@ -64,19 +64,112 @@ class LeadAutomationService
     /**
      * Get next step in sequence
      */
-    public static function getNextStep(int $currentStep): ?int
+    public static function getNextStep(int $currentStep, ?int $organizationId = null): ?int
     {
-        $templates = self::getSequenceTemplates();
-        $nextKeys = array_keys($templates);
-        sort($nextKeys);
+        // Get active templates for organization
+        $templates = \App\Models\AutomationTemplate::when($organizationId, fn($q) => $q->where('organization_id', $organizationId))
+            ->where('is_active', true)
+            ->orderBy('step')
+            ->pluck('step')
+            ->toArray();
         
-        foreach ($nextKeys as $key) {
-            if ($key > $currentStep) {
-                return $key;
+        if (empty($templates)) {
+            // Fall back to defaults
+            $templates = array_keys(self::getSequenceTemplates());
+            sort($templates);
+        }
+        
+        foreach ($templates as $step) {
+            if ($step > $currentStep) {
+                return $step;
             }
         }
         
         return null; // Sequence complete
+    }
+
+    /**
+     * Get template for a step
+     */
+    public static function getTemplate(int $step, ?int $organizationId = null): ?array
+    {
+        $template = \App\Models\AutomationTemplate::when($organizationId, fn($q) => $q->where('organization_id', $organizationId))
+            ->where('step', $step)
+            ->where('is_active', true)
+            ->first();
+        
+        if ($template) {
+            return [
+                'subject' => $template->subject,
+                'message' => $template->message,
+                'delay_days' => $template->delay_days,
+            ];
+        }
+        
+        // Fall back to defaults
+        $defaults = self::getSequenceTemplates();
+        return $defaults[$step] ?? null;
+    }
+
+    /**
+     * Process AI follow-up for a lead
+     */
+    public static function processFollowUp($lead, string $gymName): ?string
+    {
+        if (!$lead->ai_enabled) {
+            return null;
+        }
+        
+        $currentStep = $lead->ai_sequence_step ?? 0;
+        $nextStep = self::getNextStep($currentStep, $lead->organization_id);
+        
+        if ($nextStep === null) {
+            // Sequence complete
+            return null;
+        }
+        
+        // Check if it's time for next follow-up
+        if ($lead->next_followup_at && now()->lt($lead->next_followup_at)) {
+            return null;
+        }
+        
+        // Get template (custom or default)
+        $template = self::getTemplate($nextStep, $lead->organization_id);
+        
+        if (!$template) {
+            return null;
+        }
+        
+        // Generate message
+        $message = self::generateMessageFromTemplate($template['message'], [
+            'name' => $lead->name,
+            'goals' => $lead->goals,
+        ], $gymName);
+        
+        // Update lead
+        $lead->update([
+            'ai_sequence_step' => $nextStep,
+            'next_followup_at' => now()->addDays($template['delay_days']),
+            'last_contacted_at' => now(),
+        ]);
+        
+        return $message;
+    }
+
+    /**
+     * Generate message from template
+     */
+    public static function generateMessageFromTemplate(string $template, array $data, string $gymName): string
+    {
+        $message = $template;
+        $message = str_replace('{{name}}', explode(' ', $data['name'])[0], $message);
+        $message = str_replace('{{gym_name}}', $gymName, $message);
+        
+        if (!empty($data['goals'])) {
+            $message .= "\n\nWe saw you're interested in: " . $data['goals'];
+        }
+        
+        return $message;
     }
 
     /**
