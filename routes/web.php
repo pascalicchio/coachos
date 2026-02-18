@@ -55,6 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::put('/leads/{lead}', [LeadController::class, 'update'])->name('leads.update');
     Route::delete('/leads/{lead}', [LeadController::class, 'destroy'])->name('leads.destroy');
     Route::post('/leads/{lead}/convert', [LeadController::class, 'convert'])->name('leads.convert');
+    Route::post('/leads/{lead}/ai-enable', [LeadController::class, 'enableAi'])->name('leads.ai-enable');
+    Route::post('/leads/{lead}/ai-disable', [LeadController::class, 'disableAi'])->name('leads.ai-disable');
+    Route::get('/leads/{lead}/ai-preview', [LeadController::class, 'aiPreview'])->name('leads.ai-preview');
     
     // Locations Module
     Route::get('/locations', [LocationController::class, 'index'])->name('locations');
@@ -91,3 +94,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// AI Lead Automation Schedule (run hourly)

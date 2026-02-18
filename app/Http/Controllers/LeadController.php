@@ -73,4 +73,59 @@ class LeadController extends Controller
         $lead->update(['status' => 'converted']);
         return back()->with('success', 'Lead converted to member!');
     }
+
+    /**
+     * Enable AI automation for a lead
+     */
+    public function enableAi(Request $request, Lead $lead)
+    {
+        $request->validate([
+            'goals' => 'nullable|string|max:500',
+        ]);
+
+        $lead->update([
+            'ai_enabled' => true,
+            'ai_sequence_step' => 0,
+            'next_followup_at' => now(), // Start immediately
+            'goals' => $request->goals,
+            'status' => 'nurturing',
+        ]);
+
+        // Trigger first follow-up immediately
+        $organization = $lead->organization;
+        $gymName = $organization?->name ?? 'Our Gym';
+        $message = \App\Services\LeadAutomationService::processFollowUp($lead, $gymName);
+
+        return back()->with('success', 'AI automation enabled for this lead!');
+    }
+
+    /**
+     * Disable AI automation for a lead
+     */
+    public function disableAi(Lead $lead)
+    {
+        $lead->update([
+            'ai_enabled' => false,
+            'next_followup_at' => null,
+        ]);
+
+        return back()->with('success', 'AI automation disabled for this lead');
+    }
+
+    /**
+     * Get AI message preview
+     */
+    public function aiPreview(Request $request, Lead $lead)
+    {
+        $step = $request->get('step', 0);
+        $organization = $lead->organization;
+        $gymName = $organization?->name ?? 'Our Gym';
+        
+        $message = \App\Services\LeadAutomationService::generateMessage($step, [
+            'name' => $lead->name,
+            'goals' => $lead->goals,
+        ], $gymName);
+
+        return response()->json(['message' => $message]);
+    }
 }

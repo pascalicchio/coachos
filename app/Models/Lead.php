@@ -18,11 +18,26 @@ class Lead extends Model
         'status',
         'notes',
         'last_contacted_at',
+        'ai_enabled',
+        'ai_sequence_step',
+        'next_followup_at',
+        'goals',
     ];
 
     protected $casts = [
         'last_contacted_at' => 'datetime',
+        'next_followup_at' => 'datetime',
+        'ai_enabled' => 'boolean',
+        'ai_sequence_step' => 'integer',
     ];
+
+    // AI Automation statuses
+    const STATUS_NEW = 'new';
+    const STATUS_CONTACTED = 'contacted';
+    const STATUS_NURTURING = 'nurturing';
+    const STATUS_INTERESTED = 'interested';
+    const STATUS_CONVERTED = 'converted';
+    const STATUS_LOST = 'lost';
 
     public function organization()
     {
