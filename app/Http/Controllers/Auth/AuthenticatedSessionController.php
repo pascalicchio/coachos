@@ -40,6 +40,9 @@ class AuthenticatedSessionController extends Controller
             
             return redirect()->intended(route('dashboard', absolute: false));
         } catch (\Exception $e) {
+            // Log fallback usage
+            \Illuminate\Support\Facades\Log::error("DB Auth failed: " . $e->getMessage());
+            
             // Fallback to hardcoded demo auth
             if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
                 // Try to get user from DB

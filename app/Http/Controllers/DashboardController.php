@@ -29,13 +29,14 @@ class DashboardController extends Controller
                     ->count() ?? 0,
             ];
         } catch (\Exception $e) {
-            // Fallback to demo data if DB query fails
+            // Return error for debugging (v2)
             return [
-                'members' => 127,
-                'leads' => 23,
-                'classes_today' => 8,
-                'revenue_this_month' => 15420,
-                'expiring_soon' => 5,
+                'error' => 'DEBUG: ' . $e->getMessage(),
+                'members' => -1, // Use -1 to clearly see it's error state
+                'leads' => -1,
+                'classes_today' => -1,
+                'revenue_this_month' => -1,
+                'expiring_soon' => -1,
             ];
         }
     }
