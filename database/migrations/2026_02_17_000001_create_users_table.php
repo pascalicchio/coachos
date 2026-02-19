@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->foreignId('organization_id')->nullable()->constrained()->onDelete('set null');
             $table->string('role')->default('student'); // admin, coach, student
             $table->string('phone')->nullable();
             $table->boolean('is_active')->default(true);

@@ -27,8 +27,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Demo Owner',
             'email' => 'demo@gymmanageros.com',
             'password' => Hash::make('password'),
-            'organization_id' => $org->id,
-            'role_id' => 1,
+            'role' => 'owner',
         ]);
     }
 }
