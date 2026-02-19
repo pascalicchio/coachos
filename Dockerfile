@@ -1,43 +1,24 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libpq-dev \
-    zip \
-    unzip \
-    libzip-dev
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo pdo_pgsql pgsql zip
-
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
-
-# Copy existing application
-COPY . /var/www/html
-
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www
 
 # Install dependencies
-WORKDIR /var/www/html
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN apt-get update && apt-get install -y git curl libpng-dev libonig-dev libxml2-dev libpq-dev zip unzip
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Expose port
-EXPOSE 80
+# Copy app
+COPY . .
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Install composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+# Install Laravel
+RUN composer install --no-dev --no-interaction
+
+# Expose
+EXPOSE 8080
+
+# Run
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
