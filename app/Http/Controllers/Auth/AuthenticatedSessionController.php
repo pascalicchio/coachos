@@ -29,6 +29,15 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // Hardcoded auth for demo (no DB required)
+        if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
+            $request->session()->put('user_id', 1);
+            $request->session()->put('email', $request->email);
+            $request->session()->regenerate();
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+        
+        // Fallback to normal auth if needed
         $request->authenticate();
 
         $request->session()->regenerate();
