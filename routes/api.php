@@ -1,4 +1,8 @@
 
+<?php
+
+use Illuminate\Http\Request;
+
 Route::post('/login', function (Request $request) {
     if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
         $request->session()->put('user_id', 1);
