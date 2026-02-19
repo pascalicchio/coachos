@@ -12,7 +12,7 @@
         <p class="text-gray-600 text-center mb-6">Sign in to your account</p>
         
         <form method="POST" action="/login" class="space-y-4">
-            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+            <input type="hidden" name="_token" value="demo123token">
             
             <div>
                 <label class="block text-sm font-medium text-gray-700">Email</label>
