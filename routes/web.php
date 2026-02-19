@@ -97,13 +97,10 @@ require __DIR__.'/auth.php';
 
 // AI Lead Automation Schedule (run hourly)
 
-Route::post('/api/login', [SimpleLoginController::class, 'login']);
 
 
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->withoutMiddleware([\Illuminate\Csrf\TokenValidationException::class]);
 
 
-Route::post('/login', function (Request $request) {
     // Demo hardcoded login
     if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
         $request->session()->put('login', true);
@@ -116,3 +113,11 @@ Route::post('/login', function (Request $request) {
     return back()->withErrors(['email' => 'Invalid credentials']);
 })->middleware('web');
 
+Route::post('/login', function (Request $request) {
+    // Demo hardcoded login
+    if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
+        $request->session()->put('login', true);
+        return redirect('/dashboard');
+    }
+    return back()->withErrors(['email' => 'Invalid credentials']);
+})->middleware('web');
