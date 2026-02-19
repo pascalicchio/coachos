@@ -12,20 +12,14 @@
         <p class="text-gray-600 text-center mb-6">Sign in to your account</p>
         
         <?php
-session_start();
- if(session('error')): ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 <?php
-session_start();
- echo e(session('error')); ?>
             </div>
         <?php
-session_start();
  endif; ?>
         
         <form method="POST" action="/login" class="space-y-4">
             <?php
-session_start();
  echo csrf_field(); ?>
             
             <div>
