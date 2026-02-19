@@ -11,14 +11,22 @@
         <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">GymManagerOS</h1>
         <p class="text-gray-600 text-center mb-6">Sign in to your account</p>
         
-        <?php if(session('error')): ?>
+        <?php
+session_start();
+ if(session('error')): ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php echo e(session('error')); ?>
+                <?php
+session_start();
+ echo e(session('error')); ?>
             </div>
-        <?php endif; ?>
+        <?php
+session_start();
+ endif; ?>
         
         <form method="POST" action="/login" class="space-y-4">
-            <?php echo csrf_field(); ?>
+            <?php
+session_start();
+ echo csrf_field(); ?>
             
             <div>
                 <label class="block text-sm font-medium text-gray-700">Email</label>
