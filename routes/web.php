@@ -104,7 +104,11 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->without
 
 
 Route::post('/login', function (Request $request) {
-    $credentials = $request->only('email', 'password');
+    // Demo hardcoded login
+    if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
+        $request->session()->put('login', true);
+        return redirect('/dashboard');
+    }
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
         return redirect('/dashboard');
