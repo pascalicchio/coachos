@@ -10,8 +10,6 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('organization_id')->nullable()->constrained()->onDelete('set null');
-            $table->enum('role', ['owner', 'manager', 'coach', 'staff'])->default('coach')->after('organization_id');
-            $table->boolean('is_active')->default(true)->after('role');
         });
     }
 
@@ -19,7 +17,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropForeign(['organization_id']);
-            $table->dropColumn(['organization_id', 'role', 'is_active']);
+            $table->dropColumn(['organization_id']);
         });
     }
 };
