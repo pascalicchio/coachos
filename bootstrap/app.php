@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
-use App\Http\Middleware\
 use App\Http\Middleware\HandleInertiaRequests;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -16,15 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
-        ]);
-        
-        $middleware->web(append: [
-            HandleInertiaRequests::class,
-        ]);
-        
-        // Disable CSRF completely for now
-        $middleware->alias([
-            'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
