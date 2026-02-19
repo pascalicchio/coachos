@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            $table->enum('plan', ['starter', 'pro', 'business'])->default('starter');
+            $table->string('plan')->default('starter');
             $table->timestamp('trial_ends_at')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
