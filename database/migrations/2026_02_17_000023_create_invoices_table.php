@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('subtotal', 10, 2);
             $table->decimal('tax', 10, 2)->default(0);
             $table->decimal('total', 10, 2);
-            $table->enum('status', ['draft', 'sent', 'paid', 'overdue', 'cancelled'])->default('draft');
+            $table->string('status')->default('draft');
             $table->date('due_date')->nullable();
             $table->date('paid_at')->nullable();
             $table->text('notes')->nullable();

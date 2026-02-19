@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('source')->nullable(); // instagram, referral, website, etc
-            $table->enum('status', ['new', 'contacted', 'scheduled', 'converted', 'lost'])->default('new');
+            $table->string('status')->default('new');
             $table->text('notes')->nullable();
             $table->timestamp('last_contacted_at')->nullable();
             $table->timestamps();

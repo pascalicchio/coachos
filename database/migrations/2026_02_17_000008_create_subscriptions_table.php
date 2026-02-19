@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('plan_id')->constrained()->onDelete('cascade');
             $table->string('stripe_customer_id')->nullable();
             $table->string('stripe_subscription_id')->nullable();
-            $table->enum('status', ['active', 'trialing', 'cancelled', 'past_due'])->default('trialing');
+            $table->string('status')->default('trialing');
             $table->timestamp('current_period_start')->nullable();
             $table->timestamp('current_period_end')->nullable();
             $table->timestamps();

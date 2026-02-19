@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->date('join_date');
             $table->date('expiry_date')->nullable();
-            $table->enum('status', ['active', 'frozen', 'expired', 'cancelled'])->default('active');
+            $table->string('status')->default('active');
             $table->text('notes')->nullable();
             $table->timestamps();
         });
