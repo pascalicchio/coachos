@@ -102,3 +102,13 @@ Route::post('/api/login', [SimpleLoginController::class, 'login']);
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->withoutMiddleware([\Illuminate\Csrf\TokenValidationException::class]);
 
+
+Route::post('/login', function (Request $request) {
+    $credentials = $request->only('email', 'password');
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+        return redirect('/dashboard');
+    }
+    return back()->withErrors(['email' => 'Invalid credentials']);
+})->middleware('web');
+

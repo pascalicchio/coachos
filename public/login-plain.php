@@ -11,9 +11,7 @@
         <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">GymManagerOS</h1>
         <p class="text-gray-600 text-center mb-6">Sign in to your account</p>
         
-        <form method="POST" action="/login" class="space-y-4">
-            <input type="hidden" name="_token" value="demo123token">
-            
+        <form id="loginForm" class="space-y-4">
             <div>
                 <label class="block text-sm font-medium text-gray-700">Email</label>
                 <input type="email" name="email" value="demo@gymmanageros.com" 
@@ -32,9 +30,43 @@
             </button>
         </form>
         
+        <div id="result" class="mt-4 p-4 rounded hidden"></div>
+        
         <div class="mt-4 text-center text-sm text-gray-500">
             Demo: demo@gymmanageros.com / password
         </div>
     </div>
+
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const result = document.getElementById('result');
+        
+        result.className = 'mt-4 p-4 rounded bg-yellow-100';
+        result.textContent = 'Logging in...';
+        result.classList.remove('hidden');
+        
+        try {
+            const response = await fetch('/login', {
+                method: 'POST',
+                body: formData,
+                credentials: 'same-origin'
+            });
+            
+            if (response.ok || response.redirected) {
+                result.className = 'mt-4 p-4 rounded bg-green-100';
+                result.textContent = 'Login successful! Redirecting...';
+                window.location.href = '/dashboard';
+            } else {
+                result.className = 'mt-4 p-4 rounded bg-red-100';
+                result.textContent = 'Login failed. Please try again.';
+            }
+        } catch (err) {
+            result.className = 'mt-4 p-4 rounded bg-red-100';
+            result.textContent = 'Error: ' + err.message;
+        }
+    });
+    </script>
 </body>
 </html>
