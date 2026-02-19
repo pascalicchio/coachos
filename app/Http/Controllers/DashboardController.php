@@ -21,7 +21,7 @@ class DashboardController extends Controller
                 'classes_today' => \App\Models\ScheduledClass::where('organization_id', $orgId)->whereDate('start_time', today())->count() ?? 0,
                 'revenue_this_month' => \App\Models\Payment::where('organization_id', $orgId)
                     ->where('status', 'completed')
-                    ->whereMonth('paid_at', now()->month)
+                    ->whereMonth('payment_date', now()->month)
                     ->sum('amount') ?? 0,
                 'expiring_soon' => \App\Models\Member::where('organization_id', $orgId)
                     ->where('status', 'active')
