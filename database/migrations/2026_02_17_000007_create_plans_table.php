@@ -23,7 +23,7 @@ return new class extends Migration
         DB::table('plans')->insert([
             ['name' => 'starter', 'price' => 19.00, 'max_locations' => 1, 'max_coaches' => 5, 'features' => json_encode(['scheduling', 'payments', 'basic_reports']), 'created_at' => now()],
             ['name' => 'pro', 'price' => 39.00, 'max_locations' => 3, 'max_coaches' => 15, 'features' => json_encode(['scheduling', 'payments', 'private_classes', 'leads', 'reports', 'inventory']), 'created_at' => now()],
-            ['name' => 'business', 'price' => 79.00, 'max_locations' => PHP_INT_MAX, 'max_coaches' => PHP_INT_MAX, 'features' => json_encode(['scheduling', 'payments', 'private_classes', 'leads', 'reports', 'inventory', 'api_access', 'white_label']), 'created_at' => now()],
+            ['name' => 'business', 'price' => 79.00, 'max_locations' => 999, 'max_coaches' => 999, 'features' => json_encode(['scheduling', 'payments', 'private_classes', 'leads', 'reports', 'inventory', 'api_access', 'white_label']), 'created_at' => now()],
         ]);
     }
 
