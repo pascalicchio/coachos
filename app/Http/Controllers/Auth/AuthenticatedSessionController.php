@@ -29,21 +29,34 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Hardcoded auth for demo (no DB required)
-        if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
-            $request->session()->put('user_id', 1);
-            $request->session()->put('email', $request->email);
-            $request->session()->regenerate();
-            return redirect()->intended(route('dashboard', absolute: false));
-        }
-        
-        // Fallback to normal auth if DB is available
+        // Try DB authentication first
         try {
             $request->authenticate();
+            
+            // Get user and set org_id in session
+            $user = Auth::user();
+            $request->session()->put('organization_id', $user->organization_id);
             $request->session()->regenerate();
+            
             return redirect()->intended(route('dashboard', absolute: false));
         } catch (\Exception $e) {
-            // If DB auth fails, use demo
+            // Fallback to hardcoded demo auth
+            if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
+                // Try to get user from DB
+                $user = \App\Models\User::where('email', 'demo@gymmanageros.com')->first();
+                if ($user) {
+                    $request->session()->put('user_id', $user->id);
+                    $request->session()->put('email', $user->email);
+                    $request->session()->put('organization_id', $user->organization_id);
+                } else {
+                    $request->session()->put('user_id', 1);
+                    $request->session()->put('email', $request->email);
+                    $request->session()->put('organization_id', 1);
+                }
+                $request->session()->regenerate();
+                return redirect()->intended(route('dashboard', absolute: false));
+            }
+            
             return back()->withErrors(['email' => 'Invalid credentials. Try demo@gymmanageros.com / password']);
         }
     }
