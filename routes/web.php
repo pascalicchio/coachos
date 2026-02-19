@@ -6,12 +6,13 @@ Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-require __DIR__.'/auth.php';
-
-Route::post('/login', function (Request $request) {
-    if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
-        session(['logged_in' => true]);
+Route::post('/login', function () {
+    $email = request('email');
+    $password = request('password');
+    
+    if ($email === 'demo@gymmanageros.com' && $password === 'password') {
         return redirect('/dashboard');
     }
-    return back()->withErrors(['email' => 'Invalid credentials']);
+    
+    return 'Invalid credentials';
 });
