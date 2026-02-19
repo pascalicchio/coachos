@@ -11,7 +11,19 @@ class DashboardController extends Controller
 {
     public function stats()
     {
-        $orgId = auth()->user()->organization_id;
+        // Check if we have a user session (demo mode without DB)
+        if (!auth()->check() && !session()->has('user_id')) {
+            // Demo data - no DB required
+            return [
+                'members' => 127,
+                'leads' => 23,
+                'classes_today' => 8,
+                'revenue_this_month' => 15420,
+                'expiring_soon' => 5,
+            ];
+        }
+
+        $orgId = auth()->user()->organization_id ?? 1;
 
         return [
             'members' => Member::where('organization_id', $orgId)->where('status', 'active')->count(),
