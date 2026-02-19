@@ -48,7 +48,7 @@
         result.classList.remove('hidden');
         
         try {
-            const response = await fetch('/login', {
+            const response = await fetch('/do-login.php'), {
                 method: 'POST',
                 body: formData,
                 credentials: 'same-origin'
