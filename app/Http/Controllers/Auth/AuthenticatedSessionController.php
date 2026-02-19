@@ -29,11 +29,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('dashboard', absolute: false));
+        // Hardcoded auth for demo (no DB required)
+        if ($request->email === 'demo@gymmanageros.com' && $request->password === 'password') {
+            $request->session()->put('user_id', 1);
+            $request->session()->put('email', $request->email);
+            $request->session()->regenerate();
+            return redirect()->intended(route('dashboard', absolute: false));
+        }
+        
+        // Fallback to normal auth if DB is available
+        try {
+            $request->authenticate();
+            $request->session()->regenerate();
+            return redirect()->intended(route('dashboard', absolute: false));
+        } catch (\Exception $e) {
+            // If DB auth fails, use demo
+            return back()->withErrors(['email' => 'Invalid credentials. Try demo@gymmanageros.com / password']);
+        }
     }
 
     /**

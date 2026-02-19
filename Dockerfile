@@ -17,12 +17,6 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 # Install Laravel
 RUN composer install --no-scripts --no-dev --no-interaction
 
-# Generate key if not set
-RUN php artisan key:generate --force
-
-# Run migrations and seed
-RUN php artisan migrate --force && php artisan db:seed --force
-
 # Expose
 EXPOSE 8080
 
