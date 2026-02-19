@@ -22,9 +22,9 @@ return Application::configure(basePath: dirname(__DIR__))
             HandleInertiaRequests::class,
         ]);
         
-        $middleware->validateCsrfTokens(except: [
-            'login',
-            'logout',
+        // Disable CSRF completely for now
+        $middleware->alias([
+            'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
