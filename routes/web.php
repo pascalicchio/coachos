@@ -96,3 +96,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 // AI Lead Automation Schedule (run hourly)
+
+Route::post('/api/login', [SimpleLoginController::class, 'login']);
+
