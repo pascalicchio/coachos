@@ -11,16 +11,8 @@
         <h1 class="text-2xl font-bold text-center mb-6 text-blue-600">GymManagerOS</h1>
         <p class="text-gray-600 text-center mb-6">Sign in to your account</p>
         
-        <?php
-            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-                <?php
-            </div>
-        <?php
- endif; ?>
-        
         <form method="POST" action="/login" class="space-y-4">
-            <?php
- echo csrf_field(); ?>
+            <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
             
             <div>
                 <label class="block text-sm font-medium text-gray-700">Email</label>
