@@ -15,7 +15,7 @@ COPY . .
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 # Install Laravel
-RUN composer install --no-dev --no-interaction
+RUN composer install --no-scripts --no-dev --no-interaction
 
 # Expose
 EXPOSE 8080
