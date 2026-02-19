@@ -99,3 +99,6 @@ require __DIR__.'/auth.php';
 
 Route::post('/api/login', [SimpleLoginController::class, 'login']);
 
+
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->withoutMiddleware([\Illuminate\Csrf\TokenValidationException::class]);
+
