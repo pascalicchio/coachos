@@ -21,5 +21,4 @@ RUN composer install --no-scripts --no-dev --no-interaction
 EXPOSE 8080
 
 # Run
-RUN php artisan migrate --force
 CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
