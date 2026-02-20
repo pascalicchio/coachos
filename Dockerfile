@@ -18,7 +18,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN composer install --no-scripts --no-dev --no-interaction
 
 # Create startup script
-RUN echo '#!/bin/bash\nphp artisan migrate:fresh --force\nphp -S 0.0.0.0:8080 -t public' > /start.sh && chmod +x /start.sh
+RUN echo '#!/bin/bash\nphp artisan migrate:fresh --force\nphp artisan db:seed --force\nphp -S 0.0.0.0:8080 -t public' > /start.sh && chmod +x /start.sh
 
 # Expose
 EXPOSE 8080
